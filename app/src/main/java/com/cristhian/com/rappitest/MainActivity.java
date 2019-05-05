@@ -1,5 +1,6 @@
 package com.cristhian.com.rappitest;
 
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.cristhian.com.rappitest.domain.AppiInterface;
+import com.cristhian.com.rappitest.domain.ConstantsServices;
+import com.cristhian.com.rappitest.domain.MovieResults;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static  int PAGE = 1;
+    public static  String CATEGORY = "popular";
+
+    private TextView tite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +42,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getMovies();
+        loadView();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +61,44 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void loadView() {
+
+        tite = findViewById(R.id.title);
+    }
+
+    private void getMovies() {
+
+        Retrofit retrofit =  new Retrofit.Builder()
+                .baseUrl(ConstantsServices.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()).build();
+
+
+        AppiInterface myInterface = retrofit.create(AppiInterface.class);
+
+        Call<MovieResults> call =  myInterface.getMovies(
+                                                         ConstantsServices.CATEGORY,
+                                                         ConstantsServices.API_KEY,
+                                                         ConstantsServices.LANGUAGE,
+                                                         ConstantsServices.PAGE);
+
+        call.enqueue(new Callback<MovieResults>() {
+            @Override
+            public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
+                MovieResults results = response.body();
+                List<MovieResults.ResultsBean> listOfMovies = results.getResults();
+                MovieResults.ResultsBean firstMovie = listOfMovies.get(0);
+                tite.setText(firstMovie.getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<MovieResults> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
     @Override

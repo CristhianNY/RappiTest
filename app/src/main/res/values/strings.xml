@@ -9,4 +9,6 @@
 
     <!--Service-->
     <string name="base_url">https://api.themoviedb.org</string>
+    <string name="api_key">7b5bbf9c65b99f10ec5b1bb12ddbd660</string>
+    <string name="language">en-US</string>
 </resources>
