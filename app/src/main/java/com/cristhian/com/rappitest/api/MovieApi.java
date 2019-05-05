@@ -1,4 +1,6 @@
-package com.cristhian.com.rappitest.domain;
+package com.cristhian.com.rappitest.api;
+
+import com.cristhian.com.rappitest.domain.MovieResults;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

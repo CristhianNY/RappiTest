@@ -1,6 +1,5 @@
-package com.cristhian.com.rappitest;
+package com.cristhian.com.rappitest.view;
 
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,8 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.cristhian.com.rappitest.domain.AppiInterface;
-import com.cristhian.com.rappitest.domain.ConstantsServices;
+import com.cristhian.com.rappitest.R;
+import com.cristhian.com.rappitest.api.MovieApi;
+import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.domain.MovieResults;
 
 import java.util.List;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
 
-        AppiInterface myInterface = retrofit.create(AppiInterface.class);
+        MovieApi myInterface = retrofit.create(MovieApi.class);
 
         Call<MovieResults> call =  myInterface.getMovies(
                                                          ConstantsServices.CATEGORY,
