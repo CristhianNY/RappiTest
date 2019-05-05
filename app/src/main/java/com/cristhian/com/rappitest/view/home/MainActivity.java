@@ -1,8 +1,9 @@
-package com.cristhian.com.rappitest.view;
+package com.cristhian.com.rappitest.view.home;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,25 +16,20 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.cristhian.com.rappitest.R;
-import com.cristhian.com.rappitest.api.MovieApi;
-import com.cristhian.com.rappitest.api.ConstantsServices;
-import com.cristhian.com.rappitest.domain.MovieResults;
+import com.cristhian.com.rappitest.model.MovieResults;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , HomeView {
 
     public static  int PAGE = 1;
     public static  String CATEGORY = "popular";
 
     private TextView tite;
+    private HomePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +38,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getMovies();
+        ButterKnife.bind(this);
+
+        presenter = new HomePresenter(this);
+
+        presenter.getMoviesByCategory();
+
         loadView();
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +64,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        HomeFragment homeFragment = new HomeFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(null).commit();
     }
 
     private void loadView() {
@@ -70,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
     private void getMovies() {
 
-        Retrofit retrofit =  new Retrofit.Builder()
+       /** Retrofit retrofit =  new Retrofit.Builder()
                 .baseUrl(ConstantsServices.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
@@ -98,7 +106,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+**/
     }
 
     @Override
@@ -156,5 +164,25 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void setMovie(List<MovieResults.ResultsBean> movie) {
+
+    }
+
+    @Override
+    public void onErrorLoading(String message) {
+
     }
 }

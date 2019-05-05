@@ -1,4 +1,4 @@
-package com.cristhian.com.rappitest.domain;
+package com.cristhian.com.rappitest.model;
 
 import java.util.List;
 
