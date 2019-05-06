@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
         ButterKnife.bind(this, view);
         presenter = new HomePresenter(this);
-        presenter.getMoviesByCategory();
+        presenter.getMoviesByCategory(getActivity());
 
         return view;
     }

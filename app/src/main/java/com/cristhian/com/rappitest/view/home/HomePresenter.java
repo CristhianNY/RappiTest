@@ -1,5 +1,6 @@
 package com.cristhian.com.rappitest.view.home;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cristhian.com.rappitest.Utils;
@@ -20,11 +21,11 @@ public class HomePresenter {
         this.view = view;
     }
 
-    public void getMoviesByCategory(){
+    public void getMoviesByCategory(Context context){
 
         view.showLoading();
 
-        Utils.getApi().getMovies(ConstantsServices.CATEGORY,
+        Utils.getApi(context).getMovies(ConstantsServices.CATEGORY,
                                  ConstantsServices.API_KEY,
                                  ConstantsServices.LANGUAGE,
                                  ConstantsServices.PAGE).enqueue(new Callback<MovieResults>() {
@@ -35,7 +36,6 @@ public class HomePresenter {
                 if(response.isSuccessful()&& response.body()!=null){
                     MovieResults results = response.body();
                     List<MovieResults.ResultsBean> listOfMovies = results.getResults();
-                    MovieResults.ResultsBean firstMovie = listOfMovies.get(0);
                     view.setMovie(listOfMovies);
                 }else {
                     view.onErrorLoading(response.message());

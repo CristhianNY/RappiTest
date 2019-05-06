@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
         presenter = new HomePresenter(this);
 
-        presenter.getMoviesByCategory();
+        presenter.getMoviesByCategory(this);
 
         loadView();
 

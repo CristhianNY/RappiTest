@@ -8,8 +8,8 @@ import com.cristhian.com.rappitest.api.MovieClient;
 
 public class Utils {
   //
-  public static MovieApi getApi() {
-      return MovieClient.getMovieClient().create(MovieApi.class);
+  public static MovieApi getApi(Context context) {
+      return MovieClient.getMovieClient(context).create(MovieApi.class);
   }
 
     public static AlertDialog showDialogMessage(Context context, String title, String message) {

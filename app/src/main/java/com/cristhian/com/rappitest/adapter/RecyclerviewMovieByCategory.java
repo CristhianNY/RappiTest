@@ -40,7 +40,7 @@ public class RecyclerviewMovieByCategory extends RecyclerView.Adapter<Recyclervi
     public void onBindViewHolder(@NonNull RecyclerviewMovieByCategory.RecyclerViewHolder viewHolder, int i) {
 
         String image = movies.get(i).getPoster_path();
-        Picasso.get().load("http://image.tmdb.org/t/p/w185/"+image).resize(320,80).placeholder(R.drawable.shadow_bottom_to_top).into(viewHolder.image);
+        Picasso.get().load("http://image.tmdb.org/t/p/w185/"+image).resize(320,580).placeholder(R.drawable.shadow_bottom_to_top).into(viewHolder.image);
     }
 
 
