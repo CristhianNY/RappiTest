@@ -13,19 +13,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomePresenter {
+public class HomePresenterLocal {
 
     private HomeView view;
 
-    public HomePresenter(HomeView view) {
+    public HomePresenterLocal(HomeView view) {
         this.view = view;
     }
 
-    public void getMoviesByCategory(Context context){
+    public void getMoviesByCategory(Context context , String category){
 
         view.showLoading();
 
-        Utils.getApi(context).getMovies(ConstantsServices.CATEGORY,
+        Utils.getApi(context).getMovies(category
+                ,
                                  ConstantsServices.API_KEY,
                                  ConstantsServices.LANGUAGE,
                                  ConstantsServices.PAGE).enqueue(new Callback<MovieResults>() {

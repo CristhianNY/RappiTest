@@ -1,5 +1,7 @@
 package com.cristhian.com.rappitest.view.home;
-
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.cristhian.com.rappitest.R;
+import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieResults;
 
 import java.util.List;
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity
     public static  String CATEGORY = "popular";
 
     private TextView tite;
-    private HomePresenter presenter;
+    private HomePresenterLocal presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,7 @@ public class MainActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
 
-        presenter = new HomePresenter(this);
-
-        presenter.getMoviesByCategory(this);
+        presenter = new HomePresenterLocal(this);
 
         loadView();
 
@@ -65,10 +66,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        HomeFragment homeFragment = new HomeFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(null).commit();
+        callfragment("popular");
+
     }
 
     private void loadView() {
@@ -76,37 +76,18 @@ public class MainActivity extends AppCompatActivity
         tite = findViewById(R.id.title);
     }
 
-    private void getMovies() {
 
-       /** Retrofit retrofit =  new Retrofit.Builder()
-                .baseUrl(ConstantsServices.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+    private void callfragment(String category){
 
+        Bundle bundle = new Bundle();
 
-        MovieApi myInterface = retrofit.create(MovieApi.class);
+        bundle.putString("category",category);
 
-        Call<MovieResults> call =  myInterface.getMovies(
-                                                         ConstantsServices.CATEGORY,
-                                                         ConstantsServices.API_KEY,
-                                                         ConstantsServices.LANGUAGE,
-                                                         ConstantsServices.PAGE);
+        HomeFragment homeFragment = new HomeFragment();
 
-        call.enqueue(new Callback<MovieResults>() {
-            @Override
-            public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
-                MovieResults results = response.body();
-                List<MovieResults.ResultsBean> listOfMovies = results.getResults();
-                MovieResults.ResultsBean firstMovie = listOfMovies.get(0);
-                tite.setText(firstMovie.getTitle());
-            }
-
-            @Override
-            public void onFailure(Call<MovieResults> call, Throwable t) {
-
-            }
-        });
-
-**/
+        homeFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(null).commit();
     }
 
     @Override
@@ -119,10 +100,43 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.serach, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                if(s.equals("popular")){
+                    callfragment(s);
+                }else  if(s.equals("popular")){
+                    callfragment(ConstantsServices.POPULAR);
+                }else  if(s.equals("upcoming")){
+
+                    callfragment(ConstantsServices.UPCOMING);
+
+
+                }else  if(s.equals("top rated")){
+                    callfragment(ConstantsServices.TOP_RATED);
+                }
+
+               return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -147,17 +161,21 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.popular) {
 
-        } else if (id == R.id.nav_slideshow) {
+            callfragment(ConstantsServices.POPULAR);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.top_rated) {
+
+            callfragment(ConstantsServices.TOP_RATED);
+
+        } else if (id == R.id.upcoming) {
+
+            callfragment(ConstantsServices.UPCOMING);
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.contact) {
 
         }
 
@@ -185,4 +203,5 @@ public class MainActivity extends AppCompatActivity
     public void onErrorLoading(String message) {
 
     }
+
 }

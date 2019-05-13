@@ -34,7 +34,8 @@ public class HomeFragment extends Fragment implements HomeView {
     ProgressBar progressBar;
 
 
-    private  HomePresenter presenter;
+    private HomePresenterLocal presenter;
+    private String category;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -48,8 +49,11 @@ public class HomeFragment extends Fragment implements HomeView {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, view);
-        presenter = new HomePresenter(this);
-        presenter.getMoviesByCategory(getActivity());
+        category = this.getArguments().getString("category");
+        presenter = new HomePresenterLocal(this);
+        presenter.getMoviesByCategory(getActivity(), category);
+
+
 
         return view;
     }
