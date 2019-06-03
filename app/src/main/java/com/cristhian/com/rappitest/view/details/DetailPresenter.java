@@ -9,6 +9,8 @@ import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieDetail;
 import com.cristhian.com.rappitest.model.VideoMovie;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +63,8 @@ public class DetailPresenter {
                         view.hideLoading();
                         if(response.isSuccessful() && response.body()!=null){
                             VideoMovie video = response.body();
-                            view.setVideo(video);
+                            List<VideoMovie.ResultsBean> videos = video.getResults();
+                            view.setVideo(videos);
 
                         }else {
                             view.onErrorLoading(response.message());

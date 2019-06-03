@@ -1,17 +1,21 @@
 package com.cristhian.com.rappitest.view.details;
 
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Dialog;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -19,9 +23,17 @@ import android.widget.TextView;
 
 import com.cristhian.com.rappitest.R;
 import com.cristhian.com.rappitest.Utils;
+import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieDetail;
 import com.cristhian.com.rappitest.model.VideoMovie;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +41,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailMovieFragment extends DialogFragment implements  DetailView {
+public class DetailMovieFragment extends DialogFragment implements  DetailView,  YouTubePlayer.OnInitializedListener {
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
@@ -54,7 +66,14 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
 
     private DetailPresenter detailPresenter;
     private int movieid;
+    private YouTubePlayer.OnInitializedListener mOnInitializedListener;
+    private YouTubePlayer youTubePlayer;
+    private FragmentTransaction transaction;
 
+    private YouTubePlayerSupportFragment youTubePlayerFragment;
+    private  String videoKey;
+
+    private static View view;
 
     public DetailMovieFragment() {
         // Required empty public constructor
@@ -66,11 +85,22 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         // creating the fullscreen dialog
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getActivity(),getTheme()){
+
+            @Override
+            public void onBackPressed() {
+
+              if(youTubePlayer!=null){
+                  youTubePlayer.release();
+              };
+              dismiss();
+            }
+        };
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(root);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
 
         return dialog;
 
@@ -79,15 +109,36 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_detail_movie, container, false);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_detail_movie, container, false);
+        } catch (InflateException e) {
+            /* map is already there, just return view as it is */
+        }
 
         ButterKnife.bind(this, view);
+
+        youTubePlayerFragment = (YouTubePlayerSupportFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.youtube_player_fragment);
+
+
         movieid = this.getArguments().getInt("movieId");
         detailPresenter = new DetailPresenter(this);
         detailPresenter.getMovieByIdy(Integer.toString(movieid),getActivity());
         detailPresenter.getVideos(Integer.toString(movieid),getActivity());
 
-        return  view;
+        return view;
+
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
     }
 
     @Override
@@ -107,6 +158,7 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
         title.setText(movie.getTitle());
         releaseDate.setText(movie.getRelease_date());
         originalLanguage.setText(movie.getOriginal_language());
+
         String spokenLanguage="" ;
 
         for (MovieDetail.SpokenLanguagesBean s : movie.getSpoken_languages())
@@ -122,14 +174,34 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
     }
 
     @Override
-    public void setVideo(VideoMovie video) {
+    public void setVideo(List<VideoMovie.ResultsBean> videos) {
 
-        Log.d("pruebas", "probamos");
-
+        videoKey =  videos.get(0).getKey();
+        youTubePlayerFragment.initialize(ConstantsServices.GOOGLE_API,this);
     }
+
 
     @Override
     public void onErrorLoading(String message) {
         Utils.showDialogMessage(getActivity(), "Error ", message);
     }
+
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
+        if (!wasRestored) {
+            youTubePlayer = player;
+
+            youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+
+            youTubePlayer.cueVideo(videoKey);
+        }
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        Utils.showDialogMessage(getActivity(), "Error ", youTubeInitializationResult.toString());
+    }
+
+
 }
