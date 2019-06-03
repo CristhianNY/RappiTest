@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.cristhian.com.rappitest.R;
 import com.cristhian.com.rappitest.Utils;
 import com.cristhian.com.rappitest.model.MovieDetail;
+import com.cristhian.com.rappitest.model.VideoMovie;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -83,6 +85,7 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
         movieid = this.getArguments().getInt("movieId");
         detailPresenter = new DetailPresenter(this);
         detailPresenter.getMovieByIdy(Integer.toString(movieid),getActivity());
+        detailPresenter.getVideos(Integer.toString(movieid),getActivity());
 
         return  view;
     }
@@ -115,6 +118,13 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView {
 
         Picasso.get().load("http://image.tmdb.org/t/p/w500/"+movie.getBackdrop_path()).fit().centerCrop().
                 placeholder(R.drawable.shadow_bottom_to_top).into(imagenMovie);
+
+    }
+
+    @Override
+    public void setVideo(VideoMovie video) {
+
+        Log.d("pruebas", "probamos");
 
     }
 

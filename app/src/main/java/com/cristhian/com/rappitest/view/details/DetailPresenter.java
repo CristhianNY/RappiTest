@@ -7,6 +7,7 @@ import android.util.Log;
 import com.cristhian.com.rappitest.Utils;
 import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieDetail;
+import com.cristhian.com.rappitest.model.VideoMovie;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,5 +47,32 @@ public class DetailPresenter {
                 Log.d("error",t.getMessage());
             }
         });
+    }
+    void getVideos(String id, Context context){
+
+        view.showLoading();
+
+        Utils.getApi(context).getMovieVideo(id,
+                ConstantsServices.API_KEY,
+                ConstantsServices.LANGUAGE)
+                .enqueue(new Callback<VideoMovie>() {
+                    @Override
+                    public void onResponse(@NonNull Call<VideoMovie> call, @NonNull Response<VideoMovie> response) {
+                        view.hideLoading();
+                        if(response.isSuccessful() && response.body()!=null){
+                            VideoMovie video = response.body();
+                            view.setVideo(video);
+
+                        }else {
+                            view.onErrorLoading(response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<VideoMovie> call, @NonNull  Throwable t) {
+
+                        Log.d("error",t.getMessage());
+                    }
+                });
     }
 }

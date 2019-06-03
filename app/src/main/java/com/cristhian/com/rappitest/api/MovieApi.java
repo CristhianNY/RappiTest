@@ -2,6 +2,7 @@ package com.cristhian.com.rappitest.api;
 
 import com.cristhian.com.rappitest.model.MovieDetail;
 import com.cristhian.com.rappitest.model.MovieResults;
+import com.cristhian.com.rappitest.model.VideoMovie;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,5 +21,10 @@ public interface MovieApi {
     Call<MovieDetail> getMovieDetail(@Path("movie_id") String MovieId,
                                      @Query("api_key") String apiKey,
                                      @Query("language") String language);
+
+    @GET("/3/movie/{movie_id}/videos")
+    Call<VideoMovie> getMovieVideo(@Path("movie_id") String MovieId,
+                                   @Query("api_key") String apiKey,
+                                   @Query("language") String language);
 
 }
