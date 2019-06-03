@@ -19,14 +19,10 @@ import android.widget.TextView;
 
 import com.cristhian.com.rappitest.R;
 import com.cristhian.com.rappitest.api.ConstantsServices;
-import com.cristhian.com.rappitest.model.MovieResults;
 
-import java.util.List;
-
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , HomeView {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     public static  int PAGE = 1;
     public static  String CATEGORY = "popular";
@@ -40,10 +36,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ButterKnife.bind(this);
-
-        presenter = new HomePresenterLocal(this);
 
         loadView();
 
@@ -184,24 +176,5 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void setMovie(List<MovieResults.ResultsBean> movie) {
-
-    }
-
-    @Override
-    public void onErrorLoading(String message) {
-
-    }
 
 }

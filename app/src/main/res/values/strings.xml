@@ -15,7 +15,16 @@
     <!--menu -->
     <string name="searchTitle">find</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Movie Details-->
+
+    <string name="overview">Overview</string>
+    <string name="original_language">Original Language</string>
+    <string name="release_date">Release Date</string>
+    <string name="spoken_languages">Spoken Languages</string>
+    <string name="title">Title</string>
+    <string name="Adult">Adult</string>
+    <string name="genres">Genres</string>
 
     <!--Category-->
     <string-array name="query_suggestions">

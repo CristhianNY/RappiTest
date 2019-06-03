@@ -1,5 +1,17 @@
 package com.cristhian.com.rappitest.view.details;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.cristhian.com.rappitest.Utils;
+import com.cristhian.com.rappitest.api.ConstantsServices;
+import com.cristhian.com.rappitest.model.MovieDetail;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DetailPresenter {
 
     private DetailView view;
@@ -7,11 +19,12 @@ public class DetailPresenter {
     public DetailPresenter(DetailView view) {
         this.view = view;
     }
-    void getMovieByIdy(String id){
 
-       /* view.showLoading();
+    void getMovieByIdy(String id, Context context){
 
-        Utils.getApi().getMovieDetail("299534",
+       view.showLoading();
+
+        Utils.getApi(context).getMovieDetail(id,
                 ConstantsServices.API_KEY,
                 ConstantsServices.LANGUAGE)
                 .enqueue(new Callback<MovieDetail>() {
@@ -19,22 +32,19 @@ public class DetailPresenter {
             public void onResponse(@NonNull Call<MovieDetail> call, @NonNull Response<MovieDetail> response) {
                  view.hideLoading();
                  if(response.isSuccessful() && response.body()!=null){
-                     MovieDetail results = response.body();
+                     MovieDetail movie = response.body();
+                     view.setMovie(movie);
 
-                     List<MovieResults.ResultsBean> listOfMovies = results.getResults();
-                     MovieResults.ResultsBean firstMovie = listOfMovies.get(0);
-
-
-                     MovieDetail MovieDetail = results.getHomepage()
-                    MovieDetail firstMovie = getMovieDetail.get(0);
-
+                 }else {
+                    view.onErrorLoading(response.message());
                  }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieDetail> call, @NonNull  Throwable t) {
 
+                Log.d("error",t.getMessage());
             }
-        });**/
+        });
     }
 }

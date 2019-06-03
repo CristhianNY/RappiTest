@@ -15,7 +15,9 @@ import android.widget.ProgressBar;
 import com.cristhian.com.rappitest.R;
 import com.cristhian.com.rappitest.Utils;
 import com.cristhian.com.rappitest.adapter.RecyclerviewMovieByCategory;
+import com.cristhian.com.rappitest.model.MovieDetail;
 import com.cristhian.com.rappitest.model.MovieResults;
+import com.cristhian.com.rappitest.view.details.DetailMovieFragment;
 
 import java.util.List;
 
@@ -53,8 +55,6 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter = new HomePresenterLocal(this);
         presenter.getMoviesByCategory(getActivity(), category);
 
-
-
         return view;
     }
 
@@ -84,7 +84,16 @@ public class HomeFragment extends Fragment implements HomeView {
         adapter.setOnItemClickListener(new RecyclerviewMovieByCategory.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-        // TODO
+                DetailMovieFragment detallesMovieFragment  = new DetailMovieFragment();
+
+                MovieResults.ResultsBean movieId = movie.get(position);
+                int id = movie.get(position).getId();
+                Bundle bundle = new Bundle();
+                bundle.putInt("movieId",id);
+                detallesMovieFragment.setArguments(bundle);
+                detallesMovieFragment.show(getFragmentManager(),"details");
+
+
             }
         });
 

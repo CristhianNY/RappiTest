@@ -1,4 +1,4 @@
-package com.cristhian.com.rappitest;
+package com.cristhian.com.rappitest.test;
 
 import org.junit.Test;
 
