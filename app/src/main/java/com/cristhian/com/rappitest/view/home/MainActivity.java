@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cristhian.com.rappitest.R;
 import com.cristhian.com.rappitest.api.ConstantsServices;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Cristhian4545@gmail.com", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -122,9 +123,9 @@ public class MainActivity extends AppCompatActivity
 
             callfragment(ConstantsServices.UPCOMING);
 
-        } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.contact) {
+
+            Toast.makeText(this,"Cristhian4545@gmail.com",Toast.LENGTH_LONG).show();
 
         }
 
