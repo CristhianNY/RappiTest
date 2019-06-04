@@ -39,11 +39,11 @@ _Su acrónimo en inglés SRP Single Responsibility Principle, es un principio s�
 
 Un codigo Limpio tiene las siguientes caracteristicas: 
 
-Variables legibles y bien definidas.
-patrones de diseños arquitectonicos y de diseño bien definidos
-Funciones o metodos con numero de argumentos limitados
-no tener comentarios en el codigo 
-no tener metodos vacios o sin implementar
+Variables legibles y bien definidas,
+patrones de diseños arquitectonicos y de diseño bien definidos,
+Funciones o metodos con numero de argumentos limitados,
+no tener comentarios en el codigo ,
+no tener metodos vacios o sin implementar,
 Escribir pruebas Unitarias. 
 
 
