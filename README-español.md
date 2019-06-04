@@ -25,14 +25,17 @@ _Esta applicación se desarrollo con el patron arquitectonico MVP.
 
 ._
 
-En qué consiste el principio de responsabilidad única? Cuál es su propósito? *
+## En qué consiste el principio de responsabilidad única? Cuál es su propósito? *
 
 
 ### Respuesta 🔧
 
 _Su acrónimo en inglés SRP Single Responsibility Principle, es un principio sólido. Este principio prácticamente nos dice que cada clase debe tener su responsabilidad bien definida, porque si una clase tiene muchas responsabilidades, el código está acoplado y es muy susceptible de cambiar. entre menos responsabilidades asociadas tenga una clase mucho mejor._
 
-Qué características tiene, según su opinión, un “buen” código o código limpio?
+
+## Qué características tiene, según su opinión, un “buen” código o código limpio?
+
+### Respuesta 🔧
 
 Un codigo Limpio tiene las siguientes caracteristicas: 
 
