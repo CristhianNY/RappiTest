@@ -3,7 +3,7 @@ package com.cristhian.com.rappitest.view.home;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cristhian.com.rappitest.Utils;
+import com.cristhian.com.rappitest.Utils.Utils;
 import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieResults;
 

@@ -8,31 +8,27 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Dialog;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cristhian.com.rappitest.R;
-import com.cristhian.com.rappitest.Utils;
+import com.cristhian.com.rappitest.Utils.Utils;
 import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieDetail;
 import com.cristhian.com.rappitest.model.VideoMovie;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

@@ -1,4 +1,4 @@
-package com.cristhian.com.rappitest;
+package com.cristhian.com.rappitest.Utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

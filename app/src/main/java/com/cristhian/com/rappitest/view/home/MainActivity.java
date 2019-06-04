@@ -93,45 +93,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.serach, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-
-                if(s.equals("popular")){
-                    callfragment(s);
-                }else  if(s.equals("popular")){
-                    callfragment(ConstantsServices.POPULAR);
-                }else  if(s.equals("upcoming")){
-
-                    callfragment(ConstantsServices.UPCOMING);
-
-
-                }else  if(s.equals("top rated")){
-                    callfragment(ConstantsServices.TOP_RATED);
-                }
-
-               return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

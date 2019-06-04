@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.cristhian.com.rappitest.Utils;
+import com.cristhian.com.rappitest.Utils.Utils;
 import com.cristhian.com.rappitest.api.ConstantsServices;
 import com.cristhian.com.rappitest.model.MovieDetail;
 import com.cristhian.com.rappitest.model.VideoMovie;
