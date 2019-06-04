@@ -46,16 +46,12 @@ public class CustomFilter extends Filter{
             results.values=filterList;
 
         }
-
         return results;
     }
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
-
         adapter.movies= (ArrayList<MovieResults.ResultsBean>) results.values;
-
-        //REFRESH
         adapter.notifyDataSetChanged();
     }
 }

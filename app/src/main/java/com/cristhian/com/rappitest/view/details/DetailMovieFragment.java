@@ -79,8 +79,6 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final RelativeLayout root = new RelativeLayout(getActivity());
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        // creating the fullscreen dialog
         final Dialog dialog = new Dialog(getActivity(),getTheme()){
 
             @Override
@@ -92,12 +90,11 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
               dismiss();
             }
         };
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(root);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-
         return dialog;
 
     }
@@ -113,7 +110,6 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
         try {
             view = inflater.inflate(R.layout.fragment_detail_movie, container, false);
         } catch (InflateException e) {
-            /* map is already there, just return view as it is */
         }
 
         ButterKnife.bind(this, view);
@@ -171,7 +167,6 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
 
     @Override
     public void setVideo(List<VideoMovie.ResultsBean> videos) {
-
         videoKey =  videos.get(0).getKey();
         youTubePlayerFragment.initialize(ConstantsServices.GOOGLE_API,this);
     }
@@ -186,10 +181,9 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
         if (!wasRestored) {
+
             youTubePlayer = player;
-
             youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-
             youTubePlayer.cueVideo(videoKey);
         }
     }

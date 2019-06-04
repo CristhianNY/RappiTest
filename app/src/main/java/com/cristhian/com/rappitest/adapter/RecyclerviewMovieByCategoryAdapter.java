@@ -79,11 +79,9 @@ public class RecyclerviewMovieByCategoryAdapter extends RecyclerView.Adapter<Rec
         }
     }
 
-
     public void setOnItemClickListener(ClickListener clickListener) {
         RecyclerviewMovieByCategoryAdapter.clickListener = clickListener;
     }
-
 
     public interface ClickListener {
         void onClick(View view, int position);
