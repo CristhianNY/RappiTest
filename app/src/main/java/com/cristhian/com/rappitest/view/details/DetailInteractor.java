@@ -15,11 +15,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailPresenter {
+public class DetailInteractor {
 
     private DetailView view;
 
-    public DetailPresenter(DetailView view) {
+    public DetailInteractor(DetailView view) {
         this.view = view;
     }
 

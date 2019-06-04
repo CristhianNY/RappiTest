@@ -60,7 +60,7 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
     @BindView(R.id.imagenMovie)
     ImageView imagenMovie;
 
-    private DetailPresenter detailPresenter;
+    private DetailInteractor detailPresenter;
     private int movieid;
     private YouTubePlayer.OnInitializedListener mOnInitializedListener;
     private YouTubePlayer youTubePlayer;
@@ -119,7 +119,7 @@ public class DetailMovieFragment extends DialogFragment implements  DetailView, 
 
 
         movieid = this.getArguments().getInt("movieId");
-        detailPresenter = new DetailPresenter(this);
+        detailPresenter = new DetailInteractor(this);
         detailPresenter.getMovieByIdy(Integer.toString(movieid),getActivity());
         detailPresenter.getVideos(Integer.toString(movieid),getActivity());
 

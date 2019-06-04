@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment implements HomeView {
     ProgressBar progressBar;
 
 
-    private HomePresenterLocal presenter;
+    private HomeInteractor presenter;
     private String category;
     private RecyclerviewMovieByCategoryAdapter adapter;
 
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
         ButterKnife.bind(this, view);
         category = this.getArguments().getString("category");
-        presenter = new HomePresenterLocal(this);
+        presenter = new HomeInteractor(this);
         presenter.getMoviesByCategory(getActivity(), category);
         setHasOptionsMenu(true);
 

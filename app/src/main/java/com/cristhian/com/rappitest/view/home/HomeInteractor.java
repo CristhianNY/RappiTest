@@ -13,11 +13,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomePresenterLocal {
+public class HomeInteractor {
 
     private HomeView view;
 
-    public HomePresenterLocal(HomeView view) {
+    public HomeInteractor(HomeView view) {
         this.view = view;
     }
 
